@@ -1,6 +1,8 @@
+# 保持为空：配合 RelativeURLs 生成与挂载路径无关的相对链接，
+# 因此可以直接部署到 https://docs.foyoux.dpdns.org:44443/mitmproxy/ 这类子路径下。
 baseURL = ""
-languageCode = "en-us"
-title = "mitmproxy.org docs"
+languageCode = "zh-CN"
+title = "mitmproxy 中文文档"
 publishDir = "../public"
 RelativeURLs = true
 pygmentsCodefences = true
@@ -11,6 +13,11 @@ tag = "tags"
 
 [markup.goldmark.renderer]
 unsafe = true
+
+# 译文中的标题使用 `{#anchor}` 保留了英文原文的锚点，需要显式开启标题属性解析。
+[markup.goldmark.parser.attribute]
+title = true
+block = false
 
 [security.funcs]
 getenv = ["DOCS_ARCHIVE"]

@@ -1,60 +1,54 @@
 ---
-title: "Ignoring Domains"
+title: "忽略特定域名"
 weight: 2
 aliases:
   - /howto-ignoredomains/
 ---
 
-# Ignoring Domains
+# 忽略特定域名 {#ignoring-domains}
 
-There are two main reasons why you may want to exempt some traffic from
-mitmproxy's interception mechanism:
+想把某些流量排除在 mitmproxy 的拦截机制之外，主要有两个原因：
 
-- **Certificate pinning:** Some traffic is protected using [Certificate
-  Pinning](https://security.stackexchange.com/questions/29988/what-is-certificate-pinning)
-  and mitmproxy's interception leads to errors. For example, the Twitter app,
-  Windows Update or the Apple App Store fail to work if mitmproxy is active.
-- **Convenience:** You really don't care about some parts of the traffic and
-  just want them to go away. Note that mitmproxy's [view_filter]({{< relref "/concepts/options/#view_filter" >}}) option is often the better alternative here, as it is not affected by the limitations listed below.
+- **证书固定：** 有些流量受
+  [证书固定](https://security.stackexchange.com/questions/29988/what-is-certificate-pinning)
+  保护，mitmproxy 的拦截会导致报错。例如，mitmproxy 处于活动状态时，Twitter 应用、
+  Windows Update 或 Apple App Store 都会无法工作。
+- **图个方便：** 你确实不关心流量中的某些部分，只想让它们消失。注意，在这种情况下
+  mitmproxy 的 [view_filter]({{< relref "/concepts/options#view_filter" >}}) 选项往往是
+  更好的选择，因为它不受下面列出的那些限制影响。
 
-If you want to peek into (SSL-protected) non-HTTP connections, check out the
-**tcp_proxy** feature. If you want to ignore traffic from mitmproxy's processing
-because of large response bodies, take a look at the [streaming]({{< relref "/overview/features#streaming" >}}) feature.
+如果你想窥探（受 SSL 保护的）非 HTTP 连接，可以看看 **tcp_proxy** 功能。如果你是因为响应体
+过大而想让流量绕过 mitmproxy 的处理，可以看看
+[流式传输]({{< relref "/overview/features#streaming" >}})功能。
 
 ## ignore_hosts
 
-The `ignore_hosts` option allows you to specify a regex which is matched against
-a `host:port` string (e.g. "example.com:443") of a connection. Matching hosts
-are excluded from interception, and passed on unmodified.
+`ignore_hosts` 选项允许你指定一个正则表达式，它会与连接的 `host:port` 字符串
+（例如 "example.com:443"）进行匹配。匹配上的主机会被排除在拦截之外，原样透传。
 
 |                    |                                                                    |
 | ------------------ | ------------------------------------------------------------------ |
-| command-line alias | `--ignore-hosts regex`                                             |
-| mitmproxy option   | `ignore_hosts` |
+| 命令行别名         | `--ignore-hosts regex`                                             |
+| mitmproxy 选项     | `ignore_hosts` |
 
-## Limitations
+## 限制 {#limitations}
 
-There are two important quirks to consider:
+有两个重要的怪异之处需要考虑：
 
-- **In transparent mode, the ignore pattern is matched against the IP and
-  ClientHello SNI host.** While we usually infer the hostname from the Host
-  header if the `ignore_hosts` option is set, we do not have access to this
-  information before the SSL handshake. If the client uses SNI however, then we
-  treat the SNI host as an ignore target.
-- **In regular and upstream proxy mode, explicit HTTP requests are never
-  ignored.**[^1] The ignore pattern is applied on CONNECT requests, which
-  initiate HTTPS or clear-text WebSocket connections.
+- **在透明模式下，忽略模式匹配的是 IP 和 ClientHello 中的 SNI 主机名。** 虽然在设置了
+  `ignore_hosts` 选项时我们通常会从 Host 头部推断主机名，但在 SSL 握手之前我们拿不到这个
+  信息。不过，如果客户端使用了 SNI，我们就把 SNI 主机名当作忽略目标。
+- **在常规代理和上游代理模式下，显式 HTTP 请求永远不会被忽略。**[^1] 忽略模式作用于
+  CONNECT 请求，也就是发起 HTTPS 或明文 WebSocket 连接的那些请求。
 
-## Tutorial
+## 教程 {#tutorial}
 
-If you just want to ignore one specific domain, there's usually a bulletproof
-method to do so:
+如果你只想忽略某一个特定域名，通常有一种万无一失的做法：
 
-1. Run mitmproxy or mitmdump and observe the `host:port`
-   information following the `server connect` messages in the event log.
-   mitmproxy will filter on these.
-2. Take the `host:port` string, surround it with ^ and $, escape all dots (.
-    becomes \\.) and use this as your ignore pattern:
+1. 运行 mitmproxy 或 mitmdump，观察事件日志中 `server connect` 消息后面的 `host:port`
+   信息。mitmproxy 就是按这些来过滤的。
+2. 取那个 `host:port` 字符串，用 ^ 和 $ 把它包起来，转义所有的点（. 变成 \\.），
+    然后把它作为你的忽略模式：
 
 ```
 >>> mitmdump
@@ -69,28 +63,27 @@ Proxy server listening at http://*:8080
 >>> mitmproxy --ignore-hosts '^example\.com:443$'
 ```
 
-Here are some other examples for ignore patterns:
+下面是一些其他的忽略模式示例：
 
 ```
-# Exempt traffic from the iOS App Store (the regex is lax, but usually just works):
+# 排除来自 iOS App Store 的流量（这个正则比较宽松，但通常够用）：
 --ignore-hosts apple.com:443
-# "Correct" version without false-positives:
+# 不会误匹配的“正确”版本：
 --ignore-hosts '^(.+\.)?apple\.com:443$'
 
-# Ignore example.com, but not its subdomains:
+# 忽略 example.com，但不忽略它的子域名：
 --ignore-hosts '^example.com:'
 
-# Transparent mode:
+# 透明模式：
 --ignore-hosts 17\.178\.96\.59:443
-# IP address range:
+# IP 地址范围：
 --ignore-hosts 17\.178\.\d+\.\d+:443
 ```
 
-If you want to capture some specific domains only, you can use the `--allow-hosts` option, which makes mitmproxy
-ignore all other traffic.
+如果你只想抓取某些特定域名，可以使用 `--allow-hosts` 选项，它会让 mitmproxy 忽略所有其他
+流量。
 
-[^1]: This stems from an limitation of explicit HTTP proxying: A single connection
-      can be re-used for multiple target domains - a `GET http://example.com/`
-      request may be followed by a `GET http://evil.com/` request on the same
-      connection. If we start to ignore the connection after the first request, we
-      would miss the relevant second one.
+[^1]: 这源于显式 HTTP 代理的一个固有限制：一条连接可以被复用于多个目标域名——一个
+      `GET http://example.com/` 请求之后，同一条连接上可能紧跟一个
+      `GET http://evil.com/` 请求。如果我们在第一个请求之后就开始忽略这条连接，
+      就会漏掉真正相关的第二个请求。

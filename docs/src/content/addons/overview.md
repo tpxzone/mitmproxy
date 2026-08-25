@@ -1,81 +1,70 @@
 ---
-title: "Overview"
+title: "概览"
 weight: 1
 aliases:
   - /addons-overview/
 ---
 
-# Addons
+# 插件 {#addons}
 
-Mitmproxy's addon mechanism is an exceptionally powerful part of mitmproxy. In fact, much of mitmproxy's own
-functionality is defined in
-[a suite of built-in addons](https://github.com/mitmproxy/mitmproxy/tree/main/mitmproxy/addons),
-implementing everything from functionality like
-[anticaching]({{< relref "/overview/features#anticache" >}}) and [sticky cookies]({{< relref
-"/overview/features#sticky-cookies" >}}) to our onboarding webapp.
+Mitmproxy 的插件机制是它异常强大的一部分。事实上，mitmproxy 自身的许多功能都定义在
+[一整套内置插件](https://github.com/mitmproxy/mitmproxy/tree/main/mitmproxy/addons)中，
+从[禁用缓存协商]({{< relref "/overview/features#anticache" >}})、
+[粘性 Cookie]({{< relref "/overview/features#sticky-cookies" >}})
+这类功能，一直到我们的引导安装 Web 应用，全都是这样实现的。
 
-Addons interact with mitmproxy by responding to [events]({{< relref event-hooks >}}), which allow them to hook into and
-change mitmproxy's behaviour. They are configured through [options]({{< relref "/addons/options" >}}), which can be set in
-mitmproxy's config file, changed interactively by users, or passed on the command-line. Finally, they can expose
-[commands]({{< relref "/addons/commands" >}}), which allows users to invoke their actions either directly or by binding
-them to keys in the interactive tools.
+插件通过响应[事件]({{< relref event-hooks >}})与 mitmproxy 交互，从而挂接并改变 mitmproxy
+的行为。它们通过[选项]({{< relref "/addons/options" >}})来配置，这些选项可以写在 mitmproxy
+的配置文件里、由用户交互式修改，或者通过命令行传入。最后，它们还可以暴露
+[命令]({{< relref "/addons/commands" >}})，让用户可以直接调用其动作，或者在交互式工具中把
+它们绑定到按键上。
 
-# Anatomy of an addon
+# 插件的结构 {#anatomy-of-an-addon}
 
 {{< example src="examples/addons/anatomy.py" lang="py" >}}
 
-Above is a simple addon that keeps track of the number of flows (or more
-specifically HTTP requests) we've seen. Every time it sees a new flow, it
-increments and logs its tally. The output can be found in the event log in the
-interactive tools, or on the console in mitmdump.
+上面是一个简单的插件，用来记录我们看到的 flow（更确切地说是 HTTP 请求）数量。每看到一条新的
+flow，它就把计数加一并记录下来。输出可以在交互式工具的事件日志里找到，在 mitmdump 中则打印
+到控制台。
 
-Take it for a spin and make sure that it does what it's supposed to, by loading
-it into your mitmproxy tool of choice. We'll use mitmdump in these examples,
-but the flag is identical for all tools:
+把它加载到你选用的 mitmproxy 工具里跑一跑，确认它确实在做该做的事。我们在这些例子中用
+mitmdump，但这个参数对所有工具都一样：
 
 ```bash
 mitmdump -s ./anatomy.py
 ```
 
-Here are a few things to note about the code above:
+关于上面的代码，有几点值得注意：
 
-- Mitmproxy picks up the contents of the `addons` global list and loads what it
-  finds into the addons mechanism.
-- Addons are just objects - in this case our addon is an instance of `Counter`.
-- The `request` method is an example of an *event*. Addons simply implement a
-  method for each event they want to handle. Each event and its signature are documented
-  in the [API documentation]({{< relref "event-hooks" >}}).
+- Mitmproxy 会读取全局列表 `addons` 的内容，并把其中找到的东西加载进插件机制。
+- 插件就是普通对象——在这个例子里，我们的插件是 `Counter` 的一个实例。
+- `request` 方法是一个*事件*的例子。插件只需为它想处理的每个事件实现一个方法即可。
+  每个事件及其签名都记录在[API 文档]({{< relref "event-hooks" >}})中。
 
-# Abbreviated Scripting Syntax
+# 简写脚本语法 {#abbreviated-scripting-syntax}
 
-Sometimes, we would like to write a quick script without going through the trouble of creating a class.
-The addons mechanism has a shorthand that allows a module as a whole to be treated as an addon object.
-This lets us place event handler functions in the module scope.
-For instance, here is a complete script that adds a header to every request:
+有时候，我们想快速写个脚本，而不想麻烦地去创建一个类。插件机制提供了一种简写形式，
+可以把整个模块当作一个插件对象。这样我们就可以把事件处理函数直接放在模块作用域里。
+例如，下面是一个完整的脚本，它给每个请求添加一个头部：
 
 {{< example src="examples/addons/anatomy2.py" lang="py" >}}
 
-# Developing Addons
+# 开发插件 {#developing-addons}
 
-## Live Reloading
+## 热重载 {#live-reloading}
 
-Scripts loaded with `-s path/to/script.py` are watched for changes.
-Whenever the file's modification time changes, mitmproxy unregisters the
-old module, re-imports the file, and re-registers the new addon — without
-restarting the proxy or losing the state of any other addons or in-flight
-flows. This means you can edit your addon in your editor and the changes
-take effect on the next save (within roughly one second).
+用 `-s path/to/script.py` 加载的脚本会被监视改动。
+每当文件的修改时间发生变化，mitmproxy 就会注销旧模块、重新导入文件并重新注册新插件——
+而无需重启代理，也不会丢失其他插件的状态或正在传输中的 flow。这意味着你可以在编辑器里
+修改插件，改动会在下一次保存时（大约一秒内）生效。
 
-Errors raised at import time, in `configure`, or in `running` are logged
-to the event log and the previous version of the addon is left
-unregistered. Fix the error and save the file again to retry. Errors
-raised inside event handlers (`request`, `response`, …) are logged but do
-not unload the addon.
+在导入时、在 `configure` 中或在 `running` 中抛出的错误会被记录到事件日志，并且插件的上一个
+版本会保持在未注册状态。修好错误后再次保存文件即可重试。在事件处理器（`request`、
+`response`、……）内部抛出的错误会被记录，但不会卸载插件。
 
-## Testing Addons
+## 测试插件 {#testing-addons}
 
-Because addons are regular Python files, the easiest way to unit-test
-them is to import the module from your test, instantiate the addon, and
-call the event handler directly. For more complex testing needs, 
-see [`test/mitmproxy/addons`](https://github.com/mitmproxy/mitmproxy/tree/main/test/mitmproxy/addons)
-(but please note that internal testing helpers have no guaranteed stable API).
+由于插件就是普通的 Python 文件，对它们做单元测试最简单的方式就是：在测试里导入模块、
+实例化插件，然后直接调用事件处理器。如果有更复杂的测试需求，可以参考
+[`test/mitmproxy/addons`](https://github.com/mitmproxy/mitmproxy/tree/main/test/mitmproxy/addons)
+（但请注意，内部测试辅助工具并不保证 API 稳定）。

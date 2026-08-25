@@ -1,3 +1,3 @@
 ---
-title: "Video Tutorials (CLI)"
---- 
+title: "视频教程（命令行）"
+---

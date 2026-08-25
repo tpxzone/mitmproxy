@@ -59,7 +59,7 @@ async function initialize() {
             document.getElementsByTagName("head")[0].appendChild(script);
         });
     } catch (e) {
-        searchErr = "Cannot fetch search index.";
+        searchErr = "无法获取搜索索引。";
     }
     onInput();
 }
@@ -71,10 +71,10 @@ function onInput() {
             return null
         }
         if (searchErr) {
-            return `<h3>Error: ${searchErr}</h3>`
+            return `<h3>错误：${searchErr}</h3>`
         }
         if (!search) {
-            return "<h3>Searching...</h3>"
+            return "<h3>搜索中……</h3>"
         }
 
         window.scrollTo({top: 0, left: 0, behavior: 'auto'});
@@ -83,9 +83,9 @@ function onInput() {
 
         let html;
         if (results.length === 0) {
-            html = `No search results for '${escapeHTML(term)}'.`
+            html = `没有找到与“${escapeHTML(term)}”相关的搜索结果。`
         } else {
-            html = `<h4>${results.length} search result${results.length > 1 ? "s" : ""} for '${escapeHTML(term)}'.</h4>`;
+            html = `<h4>与“${escapeHTML(term)}”相关的搜索结果共 ${results.length} 条。</h4>`;
         }
         for (let result of results) {
             let doc = result.doc;

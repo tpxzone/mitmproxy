@@ -74,10 +74,11 @@ for module in modules:
     textwrap.dedent(
         f"""\
         ---
-        title: "API Reference"
+        title: "API 参考"
         ---
 
         """
     ),
+    encoding="utf8",
     newline="\n",
 )

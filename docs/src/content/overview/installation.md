@@ -1,94 +1,84 @@
 ---
-title: "Installation"
+title: "安装"
 weight: 2
 aliases:
   - /overview-installation/
 ---
 
-# Installation
+# 安装 {#installation}
 
-Please follow the steps for your operating system.
+请按照适用于你的操作系统的步骤操作。
 
 ## macOS
 
-The recommended way to install mitmproxy on macOS is to use
-[Homebrew](https://brew.sh/):
+在 macOS 上安装 mitmproxy 的推荐方式是使用
+[Homebrew](https://brew.sh/)：
 
 ```bash
 brew install --cask mitmproxy
 ```
 
-Alternatively, you can download standalone binaries on [mitmproxy.org](https://mitmproxy.org/).
+此外，你也可以从 [mitmproxy.org](https://mitmproxy.org/) 下载独立的二进制文件。
 
 ## Linux
 
-The recommended way to install mitmproxy on Linux is to download the
-standalone binaries on [mitmproxy.org](https://mitmproxy.org/).
+在 Linux 上安装 mitmproxy 的推荐方式是从 [mitmproxy.org](https://mitmproxy.org/)
+下载独立的二进制文件。
 
-Some Linux distributions provide community-supported mitmproxy packages through
-their native package repositories (e.g., Arch Linux, Debian, Ubuntu, Kali Linux,
-OpenSUSE, etc.). We are not involved in the maintenance of downstream packaging
-efforts, and they often lag behind the current mitmproxy release. Please contact
-the repository maintainers directly for issues with native packages.
+一些 Linux 发行版通过其原生软件仓库提供由社区维护的 mitmproxy 包（例如 Arch Linux、
+Debian、Ubuntu、Kali Linux、OpenSUSE 等）。我们不参与下游打包工作的维护，而这些包往往
+落后于当前的 mitmproxy 版本。原生包相关的问题请直接联系仓库维护者。
 
 ## Windows
 
-To install mitmproxy on Windows, download the installer from [mitmproxy.org](https://mitmproxy.org/). 
-Alternatively, mitmproxy is also available on the
-[Microsoft Store](https://apps.microsoft.com/detail/9NWNDLQMNZD7), which installs
-updates automatically.
-We also provide standalone binaries, they take significantly longer to start
-as some files need to be extracted to temporary directories first.
-After installation, mitmproxy, mitmdump and mitmweb are also added to your PATH and can be invoked from the command line.
+要在 Windows 上安装 mitmproxy，请从 [mitmproxy.org](https://mitmproxy.org/) 下载安装程序。
+另外，mitmproxy 也可以在
+[Microsoft Store](https://apps.microsoft.com/detail/9NWNDLQMNZD7) 上获取，它会自动安装更新。
+我们同样提供独立的二进制文件，但它们的启动时间要长得多，因为需要先把一些文件解压到临时目录。
+安装完成后，mitmproxy、mitmdump 和 mitmweb 也会被加入你的 PATH，可以从命令行调用。
 
-We highly recommend to [install Windows Terminal](https://aka.ms/terminal) to improve the rendering of the console interface.
+我们强烈建议[安装 Windows Terminal](https://aka.ms/terminal)，以改善控制台界面的渲染效果。
 
-All the mitmproxy tools are also supported under
-[WSL (Windows Subsystem for Linux)](https://docs.microsoft.com/en-us/windows/wsl/about). After
-[installing WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10), follow the mitmproxy installation
-instructions for Linux.
+所有 mitmproxy 工具在
+[WSL（Windows Subsystem for Linux）](https://docs.microsoft.com/en-us/windows/wsl/about)
+下也都受支持。[安装 WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) 之后，
+按照 Linux 的 mitmproxy 安装说明操作即可。
 
-## Advanced Installation
+## 进阶安装 {#advanced-installation}
 
-### Development Setup
+### 开发环境搭建 {#development-setup}
 
-If you would like to install mitmproxy directly from source code or the
-GitHub main branch, please see the our
-[CONTRIBUTING.md](https://github.com/mitmproxy/mitmproxy/blob/main/CONTRIBUTING.md)
-on GitHub.
+如果你想直接从源代码或 GitHub main 分支安装 mitmproxy，请参见 GitHub 上的
+[CONTRIBUTING.md](https://github.com/mitmproxy/mitmproxy/blob/main/CONTRIBUTING.md)。
 
-### Installation from the Python Package Index (PyPI)
+### 从 Python 包索引（PyPI）安装 {#installation-from-the-python-package-index-pypi}
 
-If your mitmproxy addons require the installation of additional Python packages,
-you can install mitmproxy from [PyPI](https://pypi.org/project/mitmproxy/).
+如果你的 mitmproxy 插件需要安装额外的 Python 包，你可以从
+[PyPI](https://pypi.org/project/mitmproxy/) 安装 mitmproxy。
 
-While there are plenty of options around[^1], we recommend the installation using uv:
+虽然可选方案很多[^1]，但我们推荐使用 uv 来安装：
 
-[^1]: If you are familiar with the Python ecosystem, you may know that there are a million ways to install Python
-    packages. Most of them (pip, virtualenv, pipenv, etc.) should just work, but we don't have the capacity to
-    provide support for it.
+[^1]: 如果你熟悉 Python 生态，就会知道安装 Python 包的方式多如牛毛。其中大多数
+    （pip、virtualenv、pipenv 等）应该都能正常工作，但我们没有精力为它们提供支持。
 
-1. Install [uv](https://docs.astral.sh/uv/).
-2. `uv tool install mitmproxy`.
+1. 安装 [uv](https://docs.astral.sh/uv/)。
+2. 执行 `uv tool install mitmproxy`。
 
-To install additional Python packages, run `uv tool install --with <your-package-name> mitmproxy`.
+要安装额外的 Python 包，请运行 `uv tool install --with <your-package-name> mitmproxy`。
 
-### Docker Images
+### Docker 镜像 {#docker-images}
 
-You can use the official mitmproxy images from
-[DockerHub](https://hub.docker.com/r/mitmproxy/mitmproxy/).
+你可以使用来自
+[DockerHub](https://hub.docker.com/r/mitmproxy/mitmproxy/) 的官方 mitmproxy 镜像。
 
-### Security Considerations for Binary Packages
+### 二进制包的安全注意事项 {#security-considerations-for-binary-packages}
 
-Our pre-compiled binary packages and Docker images include a self-contained
-Python 3 environment, a recent version of OpenSSL, and other dependencies
-that would otherwise be cumbersome to compile and install.
+我们预编译的二进制包和 Docker 镜像内含一个自包含的 Python 3 环境、较新版本的 OpenSSL，
+以及其他若干本来编译安装起来会很麻烦的依赖。
 
-Dependencies in the binary packages are frozen on release, and can't be updated
-in situ. This means that we necessarily capture any bugs or security issues that
-may be present. We don't generally release new binary packages simply to update
-dependencies (though we may do so if we become aware of a really serious issue).
-If you use our binary packages, please make sure you update regularly to ensure
-that everything remains current.
+二进制包中的依赖在发布时就已冻结，无法就地更新。这意味着其中可能存在的任何 bug 或安全
+问题也会一并被固化下来。我们通常不会仅为了更新依赖而发布新的二进制包（不过如果我们
+得知了非常严重的问题，也可能会这么做）。如果你使用我们的二进制包，请确保定期更新，
+以保持一切都是最新的。
 
-As a general principle, mitmproxy does not "phone home" and consequently will not do any update checks.
+作为一条基本原则，mitmproxy 不会“回传数据”，因此也不会做任何更新检查。

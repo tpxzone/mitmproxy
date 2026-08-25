@@ -1,53 +1,51 @@
 ---
-title: "Custom Contentviews"
+title: "自定义内容视图"
 weight: 6
 menu:
     addons:
         weight: 6
 ---
 
-# Custom Contentviews
+# 自定义内容视图 {#custom-contentviews}
 
-Contentviews pretty-print binary message data (e.g. HTTP response bodies) that would otherwise be hard to understand for
-humans. Some contentviews are also _interactive_, i.e. the pretty-printed representation can be edited and mitmproxy 
-will re-encode it into a binary message.
+内容视图（contentview）负责美化打印二进制消息数据（例如 HTTP 响应体），否则这些数据对人类
+来说很难看懂。有些内容视图还是<em>交互式</em>的，也就是说美化后的表示可以被编辑，mitmproxy 会把它
+重新编码回二进制消息。
 
-## Simple Example
+## 简单示例 {#simple-example}
 
-All contentviews implement the [Contentview] base class:
+所有内容视图都实现 [Contentview] 基类：
 
 {{< example src="examples/addons/contentview.py" lang="py" >}}
 
-To use this contentview, load it as a regular addon:
+要使用这个内容视图，把它当作普通插件加载即可：
 
 ```shell
 mitmproxy -s examples/addons/contentview.py
 ```
 
-Like all other mitmproxy addons, contentviews are hot-reloaded when their file contents change. 
-mitmproxy (but not mitmweb) will automatically re-render the contentview as well.
+和其他所有 mitmproxy 插件一样，内容视图在文件内容变化时会被热重载。
+mitmproxy（但 mitmweb 不会）还会自动重新渲染该内容视图。
 
-For more details, see the [`mitmproxy.contentviews` API documentation].
+更多细节请参见 [`mitmproxy.contentviews` API 文档]。
 
 
-## Syntax Highlighting
+## 语法高亮 {#syntax-highlighting}
 
-Contentviews always return an unstyled `str`, but they can declare that their output matches one of the 
-predefined [`SyntaxHighlight` formats]. In particular, binary formats may prettify to YAML (or JSON) and
-use the YAML highlighter.
+内容视图始终返回未加样式的 `str`，但它们可以声明自己的输出匹配某个预定义的
+[`SyntaxHighlight` 格式]。特别地，二进制格式可以美化成 YAML（或 JSON），并使用 YAML 高亮器。
 
-The list of supported formats is currently limited, but the implementation is based on [tree-sitter] 
-and easy to extend (see the [`mitmproxy-highlight` crate]).
+目前支持的格式列表还比较有限，但实现基于 [tree-sitter]，很容易扩展
+（参见 [`mitmproxy-highlight` crate]）。
 
-## Interactive Contentviews
+## 交互式内容视图 {#interactive-contentviews}
 
-The following example implements an interactive contentview that allows users to perform edits on the prettified 
-representation:
+下面的例子实现了一个交互式内容视图，允许用户在美化后的表示上进行编辑：
 
 {{< example src="examples/addons/contentview-interactive.py" lang="py" >}}
 
-[`mitmproxy.contentviews` API documentation]: {{< relref "api/mitmproxy.contentviews.md" >}}
+[`mitmproxy.contentviews` API 文档]: {{< relref "api/mitmproxy.contentviews.md" >}}
 [Contentview]: {{< relref "api/mitmproxy.contentviews.md#Contentview" >}}
-[`SyntaxHighlight` formats]: {{< relref "api/mitmproxy.contentviews.md#Contentview.syntax_highlight" >}}
+[`SyntaxHighlight` 格式]: {{< relref "api/mitmproxy.contentviews.md#Contentview.syntax_highlight" >}}
 [`mitmproxy-highlight` crate]: https://github.com/mitmproxy/mitmproxy_rs/tree/main/mitmproxy-highlight/src
 [tree-sitter]: https://tree-sitter.github.io/tree-sitter/

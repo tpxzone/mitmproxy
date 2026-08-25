@@ -33,7 +33,7 @@ for example in examples:
     overview.append(f"  * [{example.name}](#{slug}){comment}\n")
     listings.append(
         f"""
-<h3 id="{slug}">Example: {example.name}</h3>
+<h3 id="{slug}">示例：{example.name}</h3>
 
 ```python
 {code.strip()}
@@ -43,25 +43,24 @@ for example in examples:
 
 print(
     f"""
-# Addon Examples
+# 插件示例
 
-### Dedicated Example Addons
+### 专门的示例插件
 
 {"".join(overview)}
 
-### Built-In Addons
+### 内置插件
 
-Much of mitmproxy’s own functionality is defined in
-[a suite of built-in addons](https://github.com/mitmproxy/mitmproxy/tree/main/mitmproxy/addons),
-implementing everything from functionality like anticaching and sticky cookies to our onboarding webapp.
-The built-in addons make for instructive reading, and you will quickly see that quite complex functionality
-can often boil down to a very small, completely self-contained modules.
+mitmproxy 自身的许多功能都定义在
+[一整套内置插件](https://github.com/mitmproxy/mitmproxy/tree/main/mitmproxy/addons)中，
+从禁用缓存协商、粘性 Cookie 这类功能，一直到我们的引导安装 Web 应用，全都是这样实现的。
+这些内置插件很值得一读，你会很快发现相当复杂的功能常常可以归结为一个非常小、完全自包含的模块。
 
 
-### Additional Community Examples
+### 更多社区示例
 
-Additional examples contributed by the mitmproxy community can be found
-[on GitHub](https://github.com/mitmproxy/mitmproxy/tree/main/examples/contrib).
+由 mitmproxy 社区贡献的更多示例可以
+[在 GitHub 上](https://github.com/mitmproxy/mitmproxy/tree/main/examples/contrib)找到。
 
 -------------------------
 

@@ -1,48 +1,42 @@
 ---
-title: "Getting Started"
+title: "快速上手"
 weight: 3
 aliases:
   - /overview-getting-started/
 ---
 
-# Getting Started
+# 快速上手 {#getting-started}
 
-We assume you have already [installed]({{< relref "/overview/installation">}}) mitmproxy on
-your machine.
+我们假定你已经在机器上[安装]({{< relref "/overview/installation">}})好了 mitmproxy。
 
-## Launch the tool you need
+## 启动你需要的工具 {#launch-the-tool-you-need}
 
-You can start any of our three tools from the command line / terminal.
+你可以从命令行 / 终端启动我们的三个工具中的任意一个。
 
-* **mitmproxy** gives you an interactive command-line interface
-* **mitmweb** gives you a browser-based GUI
-* **mitmdump** gives you non-interactive terminal output
+* **mitmproxy** 提供交互式命令行界面
+* **mitmweb** 提供基于浏览器的图形界面
+* **mitmdump** 提供非交互式的终端输出
 
-## Configure your browser or device
+## 配置你的浏览器或设备 {#configure-your-browser-or-device}
 
-Mitmproxy starts as a [regular HTTP proxy]({{< relref
-"/concepts/modes#regular-proxy">}}) by default and listens on `http://localhost:8080`.
+Mitmproxy 默认以[常规 HTTP 代理]({{< relref
+"/concepts/modes#regular-proxy">}})的方式启动，监听 `http://localhost:8080`。
 
-You need to configure your browser or device to route all traffic through mitmproxy.
-Browser versions and configurations options frequently change, so we recommend to simply search the
-web on how to configure an HTTP proxy for your system. Some operating system
-have a global settings, some browser have their own, other applications use
-environment variables, etc.
+你需要配置浏览器或设备，把所有流量都路由到 mitmproxy。浏览器的版本和配置项经常变动，
+因此我们建议你直接在网上搜索如何为你的系统配置 HTTP 代理。有些操作系统提供全局设置，
+有些浏览器有自己的设置，还有些应用程序使用环境变量，等等。
 
-You can check that your web traffic is going through mitmproxy by browsing to
-http://mitm.it - it should present you with a [simple page]({{< relref
-"/concepts/certificates#quick-setup">}}) to install the mitmproxy Certificate
-Authority - which is also the next step. Follow the instructions for your OS /
-system and install the CA.
+你可以访问 http://mitm.it 来确认自己的网络流量确实经过了 mitmproxy——它应该会显示一个
+[简单页面]({{< relref "/concepts/certificates#quick-setup">}})，用于安装 mitmproxy 的
+证书颁发机构（CA），而这正是下一步要做的事。按照适用于你的操作系统 / 平台的说明安装 CA。
 
-## Verifying everything works
+## 验证一切正常工作 {#verifying-everything-works}
 
-At this point your running mitmproxy instance should already show the first HTTP
-flows from your client. You can test that all TLS-encrypted web traffic is
-working as expected by browsing to https://mitmproxy.org - it should show up as
-new flow and you can inspect it.
+此时，你正在运行的 mitmproxy 实例应该已经显示出来自客户端的第一批 HTTP flow 了。你可以
+访问 https://mitmproxy.org 来测试所有 TLS 加密的网络流量是否按预期工作——它应该会作为
+一条新的 flow 出现，你可以对其进行检查。
 
-## Resources
+## 资源 {#resources}
 
-* [**GitHub**](https://github.com/mitmproxy/mitmproxy): If you want to ask usage questions, contribute
-  to mitmproxy, or submit a bug report, please use GitHub.
+* [**GitHub**](https://github.com/mitmproxy/mitmproxy)：如果你想提出使用方面的问题、
+  为 mitmproxy 贡献代码，或者提交 bug 报告，请使用 GitHub。

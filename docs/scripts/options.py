@@ -35,9 +35,9 @@ print(
       <table class=\"table optiontable\">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Description</th>
+            <th>名称</th>
+            <th>类型</th>
+            <th>说明</th>
         </tr>
         </thead>
         <tbody>
@@ -52,8 +52,8 @@ for key, option in sorted(unified_options.items(), key=lambda t: t[0]):
             {" ".join(["<span class='badge'>{}</span>".format(t) for t in option["tools"]])}</th>
           <td>{option["type"]}</td>
           <td>{option["help"]}<br/>
-            Default: {option["default"]}
-            {"<br/>Choices: {}".format(", ".join(option["choices"])) if option["choices"] else ""}
+            默认值：{option["default"]}
+            {"<br/>可选值：{}".format(", ".join(option["choices"])) if option["choices"] else ""}
 
           </td>
           </tr>

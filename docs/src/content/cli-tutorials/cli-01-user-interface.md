@@ -1,18 +1,18 @@
 ---
-title: "User Interface"
+title: "用户界面"
 weight: 1
 url: /mitmproxytutorial-userinterface/
 has_asciinema: true
 ---
 
-# User Interface
+# 用户界面 {#user-interface}
 
-First of all, we need to become familiar with mitmproxy's user interface.
-Open the terminal window in which you started mitmproxy.
-You are in the default view of mitmproxy, which shows a list of flows.
-You should see your browser's HTTP requests to load this tutorial.
-mitmproxy adds rows to the view as new requests come in.
+首先，我们需要熟悉一下 mitmproxy 的用户界面。
+打开你启动 mitmproxy 的那个终端窗口。
+你现在处于 mitmproxy 的默认视图，它显示的是一个 flow 列表。
+你应该能看到浏览器为加载本教程而发出的 HTTP 请求。
+每有新请求进来，mitmproxy 就会往视图里添加一行。
 
 {{% asciicast file="mitmproxy_user_interface" poster="0:3" instructions=true %}}
 
-In the next lesson, you will learn to intercept requests before sending them to the server.
+在下一课中，你将学习如何在请求发往服务器之前拦截它们。

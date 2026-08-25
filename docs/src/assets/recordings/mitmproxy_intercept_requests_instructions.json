@@ -1,81 +1,81 @@
 [
     {
-        "instruction": "1. Welcome to the mitmproxy tutorial. In this lesson we cover the interception of requests.",
+        "instruction": "1. 欢迎来到 mitmproxy 教程。本课我们讲解请求拦截。",
         "time_from": 0.0,
         "time_to": 7.0
     },
     {
-        "instruction": "2. We first need to configure mitmproxy to intercept requests.",
+        "instruction": "2. 我们首先需要配置 mitmproxy 来拦截请求。",
         "time_from": 16.1,
         "time_to": 20.8
     },
     {
-        "instruction": "3. Press `i` to prepopulate mitmproxy’s command prompt with `set intercept ''`.",
+        "instruction": "3. 按 `i`，mitmproxy 的命令提示符会预填入 `set intercept ''`。",
         "time_from": 21.4,
         "time_to": 27.5
     },
     {
-        "instruction": "4. We use the flow filter expression `~u <regex>` to only intercept specific URLs.",
+        "instruction": "4. 我们用 flow 过滤表达式 `~u <regex>` 只拦截特定 URL。",
         "time_from": 30.2,
         "time_to": 36.5
     },
     {
-        "instruction": "5. Additionally, we use the filter `~q` to only intercept requests, but not responses.",
+        "instruction": "5. 此外，我们用过滤器 `~q` 只拦截请求，不拦截响应。",
         "time_from": 37.1,
         "time_to": 43.7
     },
     {
-        "instruction": "6. We combine both flow filters using `&`.",
+        "instruction": "6. 我们用 `&` 把两个 flow 过滤器组合起来。",
         "time_from": 44.2,
         "time_to": 47.3
     },
     {
-        "instruction": "7. Enter `~u /Dunedin & ~q` between the quotes of the `set intercept` command and press `ENTER`.",
+        "instruction": "7. 在 `set intercept` 命令的引号之间输入 `~u /Dunedin & ~q`，然后按 `ENTER`。",
         "time_from": 47.8,
         "time_to": 55.2
     },
     {
-        "instruction": "8. The bottom bar shows that the interception has been configured.",
+        "instruction": "8. 底部栏显示拦截已配置完成。",
         "time_from": 62.8,
         "time_to": 67.8
     },
     {
-        "instruction": "9. Let’s generate a request using `curl` in a separate terminal.",
+        "instruction": "9. 我们在另一个终端里用 `curl` 生成一个请求。",
         "time_from": 68.4,
         "time_to": 73.3
     },
     {
-        "instruction": "10. You see a new line in in the list of flows.",
+        "instruction": "10. 你会在 flow 列表中看到新增的一行。",
         "time_from": 96.1,
         "time_to": 99.5
     },
     {
-        "instruction": "11. The new flow is displayed in red to indicate that it has been intercepted.",
+        "instruction": "11. 这条新 flow 显示为红色，表示它已被拦截。",
         "time_from": 100.0,
         "time_to": 105.9
     },
     {
-        "instruction": "12. Put the focus (`>>`) on the intercepted flow. This is already the case in our example.",
+        "instruction": "12. 把焦点（`>>`）放到被拦截的 flow 上。在我们的例子里它已经是聚焦状态了。",
         "time_from": 106.5,
         "time_to": 113.4
     },
     {
-        "instruction": "13. Press `a` to resume this flow without making any changes.",
+        "instruction": "13. 按 `a` 不做任何修改直接放行这条 flow。",
         "time_from": 113.9,
         "time_to": 118.5
     },
     {
-        "instruction": "14. Submit another request and focus its flow.",
+        "instruction": "14. 再提交一个请求，并把焦点放到它的 flow 上。",
         "time_from": 121.1,
         "time_to": 124.5
     },
     {
-        "instruction": "15. Press `X` to kill this flow, i.e., discard it without forwarding it to its final destination `wttr.in`.",
+        "instruction": "15. 按 `X` 杀掉这条 flow，也就是把它丢弃，不转发到最终目的地 `wttr.in`。",
         "time_from": 128.8,
         "time_to": 137.0
     },
     {
-        "instruction": "16. In the next lesson you will learn to modify intercepted flows.",
+        "instruction": "16. 在下一课中，你将学习如何修改被拦截的 flow。",
         "time_from": 141.0,
         "time_to": 146.0
     }

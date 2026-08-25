@@ -1,13 +1,13 @@
 ---
-title: "Kubernetes Services"
+title: "Kubernetes 服务"
 weight: 1
 aliases:
   - /howto-kubernetes/
 ---
 
-# Kubernetes Services
+# Kubernetes 服务 {#kubernetes-services}
 
-The [github.com/soluble-ai/kubetap](https://github.com/soluble-ai/kubetap) project
-provides a kubectl plugin for easily deploying mitmproxy to proxy Kubernetes Services.
+[github.com/soluble-ai/kubetap](https://github.com/soluble-ai/kubetap) 项目提供了一个
+kubectl 插件，可以轻松部署 mitmproxy 来代理 Kubernetes Service。
 
-For usage and documentation, please refer to the [kubetap project site](https://soluble-ai.github.io/kubetap/).
+用法和文档请参见 [kubetap 项目站点](https://soluble-ai.github.io/kubetap/)。

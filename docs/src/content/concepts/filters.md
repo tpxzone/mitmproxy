@@ -1,58 +1,57 @@
 ---
-title: "Filter expressions"
+title: "过滤表达式"
 weight: 4
 aliases:
   - /concepts-filters/
 ---
 
-# Filter expressions
+# 过滤表达式 {#filter-expressions}
 
-Many commands in the mitmproxy tool make use of filter expressions. Filter
-expressions consist of the following operators:
+mitmproxy 中的许多命令都会用到过滤表达式。过滤表达式由下列运算符组成：
 
 {{< readfile file="/generated/filters.html" >}}
 
-- Regexes are Python-style.
-- Regexes can be specified as quoted strings.
-- Regexes containing parentheses, whitespace, or the `~`, `'`, `"` characters must be quoted because these characters are reserved by the filter expression syntax. Otherwise, the expression may be parsed differently or rejected. For example, use ~u "get(Info|Routers)".
-- Regexes are case-insensitive by default.[^1]
-- Header matching (~h, ~hq, ~hs) is against a string of the form "name: value".
-- Strings with no operators are matched against the request URL.
-- The default binary operator is &.
+- 正则表达式采用 Python 风格。
+- 正则表达式可以写成带引号的字符串。
+- 包含圆括号、空白字符，或 `~`、`'`、`"` 字符的正则表达式必须加引号，因为这些字符被过滤
+  表达式语法保留。否则表达式可能被解析成别的含义，或者直接被拒绝。例如应写
+  ~u "get(Info|Routers)"。
+- 正则表达式默认不区分大小写。[^1]
+- 头部匹配（~h、~hq、~hs）是针对形如 "name: value" 的字符串进行的。
+- 不含任何运算符的字符串会与请求 URL 进行匹配。
+- 默认的二元运算符是 &。
 
-[^1]: This can be disabled by setting `MITMPROXY_CASE_SENSITIVE_FILTERS=1`
-  as an environment variable.
+[^1]: 可以通过设置环境变量 `MITMPROXY_CASE_SENSITIVE_FILTERS=1` 来禁用这一行为。
 
-## View flow selectors
+## 视图 flow 选择器 {#view-flow-selectors}
 
-In interactive contexts, mitmproxy has a set of convenient flow selectors that
-operate on the current view:
+在交互式场景中，mitmproxy 提供了一组便捷的 flow 选择器，作用于当前视图：
 
 <table class="table filtertable"><tbody>
-<tr><th>@all</th><td>All flows</td></tr>
-<tr><th>@focus</th><td>The currently focused flow</td></tr>
-<tr><th>@shown</th><td>All flows currently shown</td></tr>
-<tr><th>@hidden</th><td>All flows currently hidden</td></tr>
-<tr><th>@marked</th><td>All marked flows</td></tr>
-<tr><th>@unmarked</th><td>All unmarked flows</td></tr>
+<tr><th>@all</th><td>所有 flow</td></tr>
+<tr><th>@focus</th><td>当前聚焦的 flow</td></tr>
+<tr><th>@shown</th><td>当前显示的所有 flow</td></tr>
+<tr><th>@hidden</th><td>当前隐藏的所有 flow</td></tr>
+<tr><th>@marked</th><td>所有已标记的 flow</td></tr>
+<tr><th>@unmarked</th><td>所有未标记的 flow</td></tr>
 </tbody></table>
 
-These are frequently used in commands and key bindings.
+它们在命令和按键绑定中经常用到。
 
-## Examples
+## 示例 {#examples}
 
-URL containing "google.com":
+URL 中包含 "google.com"：
 
     google\.com
 
-Requests whose body contains the string "test":
+请求体中包含字符串 "test" 的请求：
 
     ~q ~b test
 
-Anything but requests with a text/html content type:
+除内容类型为 text/html 的请求之外的一切：
 
     !(~q & ~t "text/html")
 
-Replace entire GET string in a request (quotes required to make it work):
+替换请求中整个 GET 字符串（必须加引号才能生效）：
 
     ":~q ~m GET:.*:/replacement.html"

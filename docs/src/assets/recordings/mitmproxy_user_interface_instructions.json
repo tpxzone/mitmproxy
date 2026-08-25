@@ -1,141 +1,141 @@
 [
     {
-        "instruction": "1. Welcome to the mitmproxy tutorial. In this lesson we cover the user interface.",
+        "instruction": "1. 欢迎来到 mitmproxy 教程。本课我们讲解用户界面。",
         "time_from": 0.0,
         "time_to": 6.2
     },
     {
-        "instruction": "2. This is the default view of mitmproxy.",
+        "instruction": "2. 这是 mitmproxy 的默认视图。",
         "time_from": 14.6,
         "time_to": 17.6
     },
     {
-        "instruction": "3. mitmproxy adds rows to the view as new requests come in.",
+        "instruction": "3. 每有新请求进来，mitmproxy 就会往视图里添加一行。",
         "time_from": 18.2,
         "time_to": 22.7
     },
     {
-        "instruction": "4. Let’s generate some requests using `curl` in a separate terminal.",
+        "instruction": "4. 我们在另一个终端里用 `curl` 生成一些请求。",
         "time_from": 23.2,
         "time_to": 28.4
     },
     {
-        "instruction": "5. Use curl’s `--proxy` option to configure mitmproxy as a proxy.",
+        "instruction": "5. 用 curl 的 `--proxy` 选项把 mitmproxy 配置为代理。",
         "time_from": 31.8,
         "time_to": 36.8
     },
     {
-        "instruction": "6. We use the text-based weather service `wttr.in`.",
+        "instruction": "6. 我们使用纯文本天气服务 `wttr.in`。",
         "time_from": 46.1,
         "time_to": 49.9
     },
     {
-        "instruction": "7. You see the requests to `wttr.in` in the list of flows.",
+        "instruction": "7. 你会在 flow 列表中看到发往 `wttr.in` 的请求。",
         "time_from": 72.6,
         "time_to": 77.0
     },
     {
-        "instruction": "8. mitmproxy is controlled using keyboard shortcuts.",
+        "instruction": "8. mitmproxy 通过键盘快捷键来操作。",
         "time_from": 77.5,
         "time_to": 81.4
     },
     {
-        "instruction": "9. Use your arrow keys `↑` and `↓` to change the focused flow (`>>`).",
+        "instruction": "9. 用方向键 `↑` 和 `↓` 来改变聚焦的 flow（`>>`）。",
         "time_from": 81.9,
         "time_to": 87.2
     },
     {
-        "instruction": "10. The focused flow (`>>`) is used as a target for various commands.",
+        "instruction": "10. 聚焦的 flow（`>>`）会被用作各种命令的作用目标。",
         "time_from": 90.6,
         "time_to": 95.8
     },
     {
-        "instruction": "11. One such command shows the flow details, it is bound to `ENTER`.",
+        "instruction": "11. 其中一个命令用于显示 flow 详情，它绑定到 `ENTER`。",
         "time_from": 96.4,
         "time_to": 101.5
     },
     {
-        "instruction": "12. Press `ENTER` to view the details of the focused flow.",
+        "instruction": "12. 按 `ENTER` 查看聚焦 flow 的详情。",
         "time_from": 102.0,
         "time_to": 106.3
     },
     {
-        "instruction": "13. The flow details view has 3 panes: request, response, and detail.",
+        "instruction": "13. flow 详情视图有 3 个面板：请求、响应和详情。",
         "time_from": 107.1,
         "time_to": 112.3
     },
     {
-        "instruction": "14. Use your arrow keys `←` and `→` to switch between panes.",
+        "instruction": "14. 用方向键 `←` 和 `→` 在面板之间切换。",
         "time_from": 112.8,
         "time_to": 117.3
     },
     {
-        "instruction": "15. Press `q` to exit the current view.",
+        "instruction": "15. 按 `q` 退出当前视图。",
         "time_from": 130.7,
         "time_to": 133.5
     },
     {
-        "instruction": "16. Press `?` to get a list of all available keyboard shortcuts.",
+        "instruction": "16. 按 `?` 获取所有可用键盘快捷键的列表。",
         "time_from": 134.1,
         "time_to": 138.9
     },
     {
-        "instruction": "17. Tip: Remember the `?` shortcut. It works in every view.",
+        "instruction": "17. 提示：记住 `?` 这个快捷键，它在每个视图里都能用。",
         "time_from": 148.2,
         "time_to": 152.6
     },
     {
-        "instruction": "18. Press `q` to exit the current view.",
+        "instruction": "18. 按 `q` 退出当前视图。",
         "time_from": 153.1,
         "time_to": 155.9
     },
     {
-        "instruction": "19. Each shortcut is internally bound to a command.",
+        "instruction": "19. 每个快捷键在内部都绑定到一个命令。",
         "time_from": 156.7,
         "time_to": 160.5
     },
     {
-        "instruction": "20. You can also execute commands directly (without using shortcuts).",
+        "instruction": "20. 你也可以直接执行命令（不用快捷键）。",
         "time_from": 160.9,
         "time_to": 166.1
     },
     {
-        "instruction": "21. Press `:` to open the command prompt at the bottom.",
+        "instruction": "21. 按 `:` 打开底部的命令提示符。",
         "time_from": 166.7,
         "time_to": 170.8
     },
     {
-        "instruction": "22. Enter `console.view.flow @focus`.",
+        "instruction": "22. 输入 `console.view.flow @focus`。",
         "time_from": 171.4,
         "time_to": 174.0
     },
     {
-        "instruction": "23. The command `console.view.flow` opens the details view for a flow.",
+        "instruction": "23. 命令 `console.view.flow` 会打开某条 flow 的详情视图。",
         "time_from": 181.0,
         "time_to": 186.3
     },
     {
-        "instruction": "24. The argument `@focus` defines the target flow.",
+        "instruction": "24. 参数 `@focus` 指定了目标 flow。",
         "time_from": 186.8,
         "time_to": 190.5
     },
     {
-        "instruction": "25. Press `ENTER` to execute the command.",
+        "instruction": "25. 按 `ENTER` 执行该命令。",
         "time_from": 191.0,
         "time_to": 194.0
     },
     {
-        "instruction": "26. Commands unleash the full power of mitmproxy, i.e., to configure interceptions.",
+        "instruction": "26. 命令能释放 mitmproxy 的全部威力，比如用来配置拦截。",
         "time_from": 194.8,
         "time_to": 201.1
     },
     {
-        "instruction": "27. You now know basics of mitmproxy’s UI and how to control it.",
+        "instruction": "27. 现在你已经了解 mitmproxy 界面的基础知识以及如何操作它了。",
         "time_from": 201.7,
         "time_to": 206.5
     },
     {
-        "instruction": "28. In the next lesson you will learn to intercept flows.",
+        "instruction": "28. 在下一课中，你将学习如何拦截 flow。",
         "time_from": 208.0,
         "time_to": 212.2
     }

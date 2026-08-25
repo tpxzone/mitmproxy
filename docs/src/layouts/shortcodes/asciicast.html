@@ -7,7 +7,7 @@
         {{ $data := resources.Get $instructions_file | transform.Unmarshal }}
         <article class="panel">
             <p class="panel-heading">
-                Video Content
+                视频内容
             </p>
             {{- range $instr := $data -}}
                 <a href="#" class="panel-block" data-from="{{ $instr.time_from }}" data-to="{{ $instr.time_to }}">

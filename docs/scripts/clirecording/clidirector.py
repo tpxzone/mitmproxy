@@ -3,6 +3,7 @@ import random
 import subprocess
 import threading
 import time
+import unicodedata
 from typing import NamedTuple
 
 import libtmux
@@ -12,6 +13,11 @@ class InstructionSpec(NamedTuple):
     instruction: str
     time_from: float
     time_to: float
+
+
+def display_width(text: str) -> int:
+    """终端显示宽度：中日韩全角字符占两列。用它来估算字幕停留时长。"""
+    return sum(2 if unicodedata.east_asian_width(c) in "WF" else 1 for c in text)
 
 
 class CliDirector:
@@ -132,7 +138,7 @@ class CliDirector:
         instruction_html: str = "",
     ) -> None:
         if duration is None:
-            duration = len(msg) * 0.08  # seconds
+            duration = max(3.0, display_width(msg) * 0.08)  # seconds
         self.tmux_session.set_option(
             "display-time", int(duration * 1000)
         )  # milliseconds

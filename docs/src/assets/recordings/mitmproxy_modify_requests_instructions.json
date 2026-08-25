@@ -1,91 +1,91 @@
 [
     {
-        "instruction": "1. Welcome to the mitmproxy tutorial. In this lesson we cover the modification of intercepted requests.",
+        "instruction": "1. 欢迎来到 mitmproxy 教程。本课我们讲解如何修改被拦截的请求。",
         "time_from": 0.0,
         "time_to": 8.0
     },
     {
-        "instruction": "2. We configure and use the same interception rule as in the last tutorial.",
+        "instruction": "2. 我们配置并使用与上一课相同的拦截规则。",
         "time_from": 16.4,
         "time_to": 22.2
     },
     {
-        "instruction": "3. Press `i` to prepopulate mitmproxy’s command prompt, enter the flow filter `~u /Dunedin & ~q`, and press `ENTER`.",
+        "instruction": "3. 按 `i` 预填 mitmproxy 的命令提示符，输入 flow 过滤器 `~u /Dunedin & ~q`，然后按 `ENTER`。",
         "time_from": 22.7,
         "time_to": 31.7
     },
     {
-        "instruction": "4. Let’s generate a request using `curl` in a separate terminal.",
+        "instruction": "4. 我们在另一个终端里用 `curl` 生成一个请求。",
         "time_from": 40.7,
         "time_to": 45.6
     },
     {
-        "instruction": "5. We now want to modify the intercepted request.",
+        "instruction": "5. 现在我们想修改这个被拦截的请求。",
         "time_from": 68.3,
         "time_to": 72.0
     },
     {
-        "instruction": "6. Put the focus (`>>`) on the intercepted flow. This is already the case in our example.",
+        "instruction": "6. 把焦点（`>>`）放到被拦截的 flow 上。在我们的例子里它已经是聚焦状态了。",
         "time_from": 72.5,
         "time_to": 79.4
     },
     {
-        "instruction": "7. Press `ENTER` to open the details view for the intercepted flow.",
+        "instruction": "7. 按 `ENTER` 打开这条被拦截 flow 的详情视图。",
         "time_from": 79.9,
         "time_to": 85.0
     },
     {
-        "instruction": "8. Press `e` to edit the intercepted flow.",
+        "instruction": "8. 按 `e` 编辑这条被拦截的 flow。",
         "time_from": 85.7,
         "time_to": 88.8
     },
     {
-        "instruction": "9. mitmproxy asks which part to modify.",
+        "instruction": "9. mitmproxy 会询问要修改哪一部分。",
         "time_from": 89.6,
         "time_to": 92.5
     },
     {
-        "instruction": "10. Select `path` by using your arrow keys and press `ENTER`.",
+        "instruction": "10. 用方向键选中 `path`，然后按 `ENTER`。",
         "time_from": 93.0,
         "time_to": 97.6
     },
     {
-        "instruction": "11. mitmproxy shows all path components line by line, in our example its just `Dunedin`.",
+        "instruction": "11. mitmproxy 会逐行列出所有路径片段，在我们的例子里只有 `Dunedin`。",
         "time_from": 101.3,
         "time_to": 108.0
     },
     {
-        "instruction": "12. Press `ENTER` to modify the selected path component.",
+        "instruction": "12. 按 `ENTER` 修改选中的路径片段。",
         "time_from": 108.6,
         "time_to": 112.8
     },
     {
-        "instruction": "13. Replace `Dunedin` with `Innsbruck`.",
+        "instruction": "13. 把 `Dunedin` 替换为 `Innsbruck`。",
         "time_from": 114.5,
         "time_to": 117.3
     },
     {
-        "instruction": "14. Press `ESC` to confirm your change.",
+        "instruction": "14. 按 `ESC` 确认你的修改。",
         "time_from": 124.8,
         "time_to": 127.6
     },
     {
-        "instruction": "15. Press `q` to go back to the flow details view.",
+        "instruction": "15. 按 `q` 返回 flow 详情视图。",
         "time_from": 128.5,
         "time_to": 132.2
     },
     {
-        "instruction": "16. Press `a` to resume the intercepted flow.",
+        "instruction": "16. 按 `a` 放行这条被拦截的 flow。",
         "time_from": 133.0,
         "time_to": 136.3
     },
     {
-        "instruction": "17. You see that the request URL was modified and `wttr.in` replied with the weather report for `Innsbruck`.",
+        "instruction": "17. 你会看到请求 URL 已被修改，`wttr.in` 返回的是 `Innsbruck` 的天气预报。",
         "time_from": 139.1,
         "time_to": 147.4
     },
     {
-        "instruction": "18. In the next lesson you will learn to replay flows.",
+        "instruction": "18. 在下一课中，你将学习如何重放 flow。",
         "time_from": 147.9,
         "time_to": 151.9
     }

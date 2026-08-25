@@ -1,8 +1,8 @@
 ---
-title: "Modify Requests"
+title: "修改请求"
 weight: 4
 ---
 
-# Modify Requests
+# 修改请求 {#modify-requests}
 
 {{% video src="https://videos.mitmproxy.org/mitmweb-04-modifying-requests.webm" %}}

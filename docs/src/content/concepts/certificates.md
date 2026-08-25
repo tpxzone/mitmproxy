@@ -1,130 +1,114 @@
 ---
-title: "Certificates"
+title: "证书"
 weight: 3
 aliases:
   - /concepts-certificates/
 ---
 
-# About Certificates
+# 关于证书 {#about-certificates}
 
-Mitmproxy can decrypt encrypted traffic on the fly, as long as the client trusts
-mitmproxy's built-in certificate authority. Usually this means that the mitmproxy CA
-certificate has to be installed on the client device.
+只要客户端信任 mitmproxy 内置的证书颁发机构，mitmproxy 就能实时解密加密流量。通常这意味着
+必须在客户端设备上安装 mitmproxy 的 CA 证书。
 
-## Quick Setup
+## 快速安装 {#quick-setup}
 
-By far the easiest way to install the mitmproxy CA certificate is to use the
-built-in certificate installation app. To do this, start mitmproxy and
-configure your target device with the correct proxy settings. Now start a
-browser on the device, and visit the magic domain [mitm.it](http://mitm.it/). You should see
-something like this:
+安装 mitmproxy CA 证书最简单的方式，无疑是使用内置的证书安装应用。做法是：启动 mitmproxy，
+在目标设备上配置好正确的代理设置。然后在设备上打开浏览器，访问魔法域名
+[mitm.it](http://mitm.it/)。你应该会看到类似这样的界面：
 
 {{< figure src="/certinstall-webapp.png" class="has-border" >}}
 
-Click on the relevant icon, follow the setup instructions for the platform
-you're on and you are good to go.
+点击对应的图标，按照你所在平台的安装说明操作，就可以开始使用了。
 
-## The mitmproxy certificate authority
+## mitmproxy 证书颁发机构 {#the-mitmproxy-certificate-authority}
 
-The first time mitmproxy is run, it creates the keys for a certificate
-authority (CA) in the config directory (`~/.mitmproxy` by default).
-This CA is used for on-the-fly generation of dummy certificates for each visited website.
-Since your browser won't trust the mitmproxy CA out of the box, you will either need to click through a TLS certificate
-warning on every domain, or install the CA certificate once so that it is trusted.
+mitmproxy 首次运行时，会在配置目录（默认是 `~/.mitmproxy`）中创建一个证书颁发机构（CA）
+的密钥。这个 CA 用于为每个访问过的网站实时生成伪造证书。
+由于你的浏览器默认不会信任 mitmproxy CA，你要么在每个域名上都点掉一次 TLS 证书警告，
+要么安装一次 CA 证书让它被信任。
 
-The following files are created:
+会创建下列文件：
 
-| Filename              | Contents                                                                             |
-| --------------------- | ------------------------------------------------------------------------------------ |
-| mitmproxy-ca.pem      | The certificate **and the private key** in PEM format.                               |
-| mitmproxy-ca-cert.pem | The certificate in PEM format. Use this to distribute on most non-Windows platforms. |
-| mitmproxy-ca-cert.p12 | The certificate in PKCS12 format. For use on Windows.                                |
-| mitmproxy-ca-cert.cer | Same file as .pem, but with an extension expected by some Android devices.           |
+| 文件名                | 内容                                                             |
+| --------------------- | ---------------------------------------------------------------- |
+| mitmproxy-ca.pem      | PEM 格式的证书**以及私钥**。                                     |
+| mitmproxy-ca-cert.pem | PEM 格式的证书。在大多数非 Windows 平台上分发时使用这个。        |
+| mitmproxy-ca-cert.p12 | PKCS12 格式的证书。用于 Windows。                                |
+| mitmproxy-ca-cert.cer | 与 .pem 相同的文件，但扩展名是某些 Android 设备所要求的。        |
 
-For security reasons, the mitmproxy CA is generated uniquely on the first start and
-is not shared between mitmproxy installations on different devices. This makes sure
-that other mitmproxy users cannot intercept your traffic.
+出于安全原因，mitmproxy CA 是在首次启动时唯一生成的，不会在不同设备的 mitmproxy 安装之间
+共享。这确保了其他 mitmproxy 用户无法拦截你的流量。
 
-### Installing the mitmproxy CA certificate manually
+### 手动安装 mitmproxy CA 证书 {#installing-the-mitmproxy-ca-certificate-manually}
 
-Sometimes using the [quick install app](#quick-setup) is not an option and you need to install the CA manually.
-Below is a list of pointers to manual certificate installation
-documentation for some common platforms. The mitmproxy CA cert is located in
-`~/.mitmproxy` after it has been generated at the first start of mitmproxy.
+有时候没法使用[快速安装应用](#quick-setup)，你需要手动安装 CA。下面列出了一些常见平台
+手动安装证书文档的指引。mitmproxy CA 证书在 mitmproxy 首次启动生成之后位于 `~/.mitmproxy`。
 
-- curl on the command line:  
+- 命令行下的 curl：  
   `curl --proxy 127.0.0.1:8080 --cacert ~/.mitmproxy/mitmproxy-ca-cert.pem https://example.com/`
-- wget on the command line:  
+- 命令行下的 wget：  
   `wget -e https_proxy=127.0.0.1:8080 --ca-certificate ~/.mitmproxy/mitmproxy-ca-cert.pem https://example.com/`
 - [macOS](https://support.apple.com/guide/keychain-access/add-certificates-to-a-keychain-kyca2431/mac)
-- [macOS (automated)](https://www.dssw.co.uk/reference/security.html):
+- [macOS（自动化）](https://www.dssw.co.uk/reference/security.html)：
   `sudo security add-trusted-cert -d -p ssl -p basic -k /Library/Keychains/System.keychain ~/.mitmproxy/mitmproxy-ca-cert.pem`
 - [Ubuntu/Debian]( https://askubuntu.com/questions/73287/how-do-i-install-a-root-certificate/94861#94861)
 - [Fedora](https://docs.fedoraproject.org/en-US/quick-docs/using-shared-system-certificates/#proc_adding-new-certificates)
 - [Arch Linux](https://wiki.archlinux.org/title/Transport_Layer_Security#Add_a_certificate_to_a_trust_store)
 - [Mozilla Firefox](https://wiki.mozilla.org/MozillaRootCertificate#Mozilla_Firefox)
-- [Chrome on Linux](https://stackoverflow.com/a/15076602/198996)
+- [Linux 上的 Chrome](https://stackoverflow.com/a/15076602/198996)
 - [iOS](http://jasdev.me/intercepting-ios-traffic)  
-  On recent iOS versions you also need to enable full trust for the mitmproxy
-  root certificate:
-    1. Go to Settings > General > About > Certificate Trust Settings.
-    2. Under "Enable full trust for root certificates", turn on trust for
-       the mitmproxy certificate.
-- iOS Simulator
-  1. Ensure the macOS machine running the emulator is configured to use mitmproxy in its network settings.
-  2. Open Safari on the emulator and visit `mitm.it` to download the iOS certificate.
-  3. Navigate to Settings > General > VPN & Device Management to install the certificate.
-  4. Go to Settings > About > Certificate Trust Settings and enable trust for the installed root certificate.
-- [Java](https://docs.oracle.com/cd/E19906-01/820-4916/geygn/index.html):  
+  在较新的 iOS 版本上，你还需要为 mitmproxy 根证书启用完全信任：
+    1. 进入「设置 > 通用 > 关于本机 > 证书信任设置」。
+    2. 在「针对根证书启用完全信任」下，打开对 mitmproxy 证书的信任。
+- iOS 模拟器
+  1. 确保运行模拟器的 macOS 机器在其网络设置中已配置为使用 mitmproxy。
+  2. 在模拟器上打开 Safari，访问 `mitm.it` 下载 iOS 证书。
+  3. 进入「设置 > 通用 > VPN 与设备管理」安装该证书。
+  4. 进入「设置 > 关于本机 > 证书信任设置」，为已安装的根证书启用信任。
+- [Java](https://docs.oracle.com/cd/E19906-01/820-4916/geygn/index.html)：  
   `sudo keytool -importcert -alias mitmproxy -storepass changeit -keystore $JAVA_HOME/lib/security/cacerts -trustcacerts -file ~/.mitmproxy/mitmproxy-ca-cert.pem`
-- [Android/Android Simulator](http://wiki.cacert.org/FAQ/ImportRootCert#Android_Phones_.26_Tablets)
+- [Android / Android 模拟器](http://wiki.cacert.org/FAQ/ImportRootCert#Android_Phones_.26_Tablets)
 - [Windows](https://web.archive.org/web/20160612045445/http://windows.microsoft.com/en-ca/windows/import-export-certificates-private-keys#1TC=windows-7)
-- [Windows (automated)](https://technet.microsoft.com/en-us/library/cc732443.aspx):  
+- [Windows（自动化）](https://technet.microsoft.com/en-us/library/cc732443.aspx)：  
   `certutil -addstore root mitmproxy-ca-cert.cer`
 
-### Upstream Certificate Sniffing
+### 上游证书嗅探 {#upstream-certificate-sniffing}
 
-When mitmproxy receives a request to establish TLS (in the form of a ClientHello message), it puts the client on hold
-and first makes a connection to the upstream server to "sniff" the contents of its TLS certificate.
-The information gained -- Common Name, Organization, Subject Alternative Names -- is then used to generate a new
-interception certificate on-the-fly, signed by the mitmproxy CA. Mitmproxy then returns to the client and continues
-the handshake with the newly-forged certificate.
+当 mitmproxy 收到建立 TLS 的请求（以 ClientHello 消息的形式）时，它会先挂住客户端，
+自己先连一次上游服务器，“嗅探”其 TLS 证书的内容。
+获得的信息——Common Name、Organization、Subject Alternative Name——随后被用来实时生成一张
+由 mitmproxy CA 签名的新拦截证书。接着 mitmproxy 回到客户端，用这张新伪造的证书继续握手。
 
-Upstream cert sniffing is on by default, and can optionally be disabled by turning the `upstream_cert` option off.
+上游证书嗅探默认开启，也可以通过关闭 `upstream_cert` 选项来禁用。
 
-### Certificate Pinning
+### 证书固定 {#certificate-pinning}
 
-Some applications employ [Certificate
-Pinning](https://en.wikipedia.org/wiki/HTTP_Public_Key_Pinning) to prevent
-man-in-the-middle attacks. This means that **mitmproxy's**
-certificates will not be accepted by these applications without modifying them.
-If the contents of these connections are not important, it is recommended to use
-the [ignore_hosts]({{< relref "/howto/ignore-domains">}}) feature to prevent
-**mitmproxy** from intercepting traffic to these specific
-domains. If you want to intercept the pinned connections, you need to patch the
-application manually. For Android and (jailbroken) iOS devices, various tools
-exist to accomplish this:
+有些应用采用[证书固定](https://en.wikipedia.org/wiki/HTTP_Public_Key_Pinning)来防止中间人
+攻击。这意味着不修改这些应用，它们就不会接受 **mitmproxy** 的证书。
+如果这些连接的内容并不重要，建议使用
+[ignore_hosts]({{< relref "/howto/ignore-domains">}}) 功能来阻止 **mitmproxy** 拦截发往这些
+特定域名的流量。如果你想拦截这些被固定的连接，就需要手动给应用打补丁。对于 Android 和
+（已越狱的）iOS 设备，有多种工具可以做到这一点：
 
- - [apk-mitm](https://github.com/shroudedcode/apk-mitm) is a CLI application that automatically removes certificate
-   pinning from Android APK files.
- - [objection](https://github.com/sensepost/objection) is a runtime mobile exploration toolkit powered by Frida,
-   which supports certificate pinning bypasses on iOS and Android.
- - [ssl-kill-switch2](https://github.com/nabla-c0d3/ssl-kill-switch2) is a blackbox tool to disable certificate pinning
-   within iOS and macOS applications.
- - [android-unpinner](https://github.com/mitmproxy/android-unpinner) modifies Android APKs to inject Frida and HTTP Toolkit's unpinning scripts.
+ - [apk-mitm](https://github.com/shroudedcode/apk-mitm) 是一个命令行应用，可以自动从
+   Android APK 文件中移除证书固定。
+ - [objection](https://github.com/sensepost/objection) 是一个由 Frida 驱动的移动端运行时
+   探索工具包，支持在 iOS 和 Android 上绕过证书固定。
+ - [ssl-kill-switch2](https://github.com/nabla-c0d3/ssl-kill-switch2) 是一个黑盒工具，
+   用于在 iOS 和 macOS 应用中禁用证书固定。
+ - [android-unpinner](https://github.com/mitmproxy/android-unpinner) 会修改 Android APK，
+   注入 Frida 和 HTTP Toolkit 的反固定脚本。
 
-*Please propose other useful tools using the "Edit on GitHub" button on the top right of this page.*
+*欢迎使用本页右上角的“在 GitHub 上编辑”按钮推荐其他有用的工具。*
 
-## Using a custom server certificate
+## 使用自定义服务器证书 {#using-a-custom-server-certificate}
 
-You can use your own (leaf) certificate by passing the `--certs
-[domain=]path_to_certificate` option to mitmproxy. Mitmproxy then uses the
-provided certificate for interception of the specified domain instead of
-generating a certificate signed by its own CA.
+你可以通过给 mitmproxy 传入 `--certs [domain=]path_to_certificate` 选项来使用自己的
+（叶子）证书。这样 mitmproxy 就会用提供的证书来拦截指定域名，而不是生成一张由它自己的 CA
+签名的证书。
 
-The certificate file is expected to be in the PEM format. You can include
-intermediary certificates right below your leaf certificate, so that your PEM
-file roughly looks like this:
+证书文件需要是 PEM 格式。你可以把中间证书紧接着叶子证书一起放进去，于是你的 PEM 文件大致
+长这样：
 
     -----BEGIN PRIVATE KEY-----
     <private key>
@@ -136,44 +120,40 @@ file roughly looks like this:
     <intermediary cert (optional)>
     -----END CERTIFICATE-----
 
-For example, you can generate a certificate in this format using these
-instructions:
+举例来说，你可以用下面的方法生成这种格式的证书：
 
 ```bash
 openssl genrsa -out cert.key 2048
-# (Specify the mitm domain as Common Name, e.g. \*.google.com)
+# （把要中间人的域名填为 Common Name，例如 \*.google.com）
 openssl req -new -x509 -key cert.key -out cert.crt
 cat cert.key cert.crt > cert.pem
 ```
 
-Now, you can run mitmproxy with the generated certificate:
+现在，你可以用生成的证书运行 mitmproxy：
 
-**For all domain names**
+**对所有域名**
 
 ```bash
 mitmproxy --certs *=cert.pem
 ```
 
-**For specific domain names**
+**对特定域名**
 
 ```bash
 mitmproxy --certs *.example.com=cert.pem
 ```
 
-**Note:** `*.example.com` is for all the subdomains. You can also use
-`www.example.com` for a particular subdomain.
+**注意：** `*.example.com` 针对的是所有子域名。你也可以用 `www.example.com` 来指定某一个
+具体子域名。
 
-## Using a custom certificate authority
+## 使用自定义证书颁发机构 {#using-a-custom-certificate-authority}
 
-By default, mitmproxy will use `~/.mitmproxy/mitmproxy-ca.pem` as the
-certificate authority to generate certificates for all domains for which
-no custom certificate is provided (see above). You can use your own
-certificate authority by passing the `--set confdir=DIRECTORY` option to
-mitmproxy. Mitmproxy will then look for `mitmproxy-ca.pem` in the
-specified directory. If no such file exists, it will be generated
-automatically.
+默认情况下，mitmproxy 会用 `~/.mitmproxy/mitmproxy-ca.pem` 作为证书颁发机构，为所有没有
+提供自定义证书（见上文）的域名生成证书。你可以通过给 mitmproxy 传入
+`--set confdir=DIRECTORY` 选项来使用自己的证书颁发机构。此时 mitmproxy 会在指定目录中
+查找 `mitmproxy-ca.pem`。如果该文件不存在，会自动生成。
 
-The `mitmproxy-ca.pem` certificate file has to look roughly like this:
+`mitmproxy-ca.pem` 证书文件大致要长这样：
 
     -----BEGIN PRIVATE KEY-----
     <private key>
@@ -182,10 +162,8 @@ The `mitmproxy-ca.pem` certificate file has to look roughly like this:
     <cert>
     -----END CERTIFICATE-----
 
-When looking at the certificate with
-`openssl x509 -noout -text -in ~/.mitmproxy/mitmproxy-ca.pem`
-it should have at least the following X509v3 extensions so mitmproxy can
-use it to generate certificates:
+用 `openssl x509 -noout -text -in ~/.mitmproxy/mitmproxy-ca.pem` 查看这张证书时，
+它至少应该带有下列 X509v3 扩展，mitmproxy 才能用它来生成证书：
 
     X509v3 extensions:
         X509v3 Key Usage: critical
@@ -193,63 +171,49 @@ use it to generate certificates:
         X509v3 Basic Constraints: critical
             CA:TRUE
 
-For example, when using OpenSSL, you can create a CA authority as follows:
+例如，使用 OpenSSL 时，你可以这样创建一个 CA：
 
 ```shell
 openssl req -x509 -new -nodes -key ca.key -sha256 -out ca.crt -addext keyUsage=critical,keyCertSign
 cat ca.key ca.crt > mitmproxy-ca.pem
 ```
 
-## Mutual TLS (mTLS) and client certificates
+## 双向 TLS（mTLS）与客户端证书 {#mutual-tls-mtls-and-client-certificates}
 
-TLS is typically used in a way where the client verifies the server's identity
-using the server's certificate during the handshake, but the server does not
-verify the client's identity using the TLS protocol. Instead, the client 
-transmits cookies or other access tokens over the established secure channel to
-authenticate itself.
+TLS 的典型用法是：客户端在握手期间用服务器的证书验证服务器身份，而服务器并不通过 TLS 协议
+验证客户端身份。相反，客户端是在已建立的安全通道上传输 cookie 或其他访问令牌来完成自身认证。
 
-Mutual TLS (mTLS) is a mode where the server verifies the client's identity
-not using cookies or access tokens, but using a certificate presented by the
-client during the TLS handshake. With mTLS, both client and server use a 
-certificate to authenticate each other.
+双向 TLS（mTLS）是这样一种模式：服务器不用 cookie 或访问令牌，而是用客户端在 TLS 握手期间
+出示的证书来验证客户端身份。有了 mTLS，客户端和服务器双方都用证书来相互认证。
 
-If a server wants to verify the clients identity using mTLS, it sends an 
-additional `CertificateRequest` message to the client during the handshake. The
-client then provides its certificate and proves ownership of the private key 
-with a matching signature. This part works just like server authentication, only
-the other way around.
+如果服务器想用 mTLS 验证客户端身份，它会在握手期间额外向客户端发送一条
+`CertificateRequest` 消息。客户端随后出示自己的证书，并用匹配的签名证明自己持有对应私钥。
+这部分和服务器认证的工作方式完全一样，只是方向反过来。
 
-### mTLS between mitmproxy and upstream server
+### mitmproxy 与上游服务器之间的 mTLS {#mtls-between-mitmproxy-and-upstream-server}
 
-You can use a client certificate by passing the `--set client_certs=DIRECTORY|FILE`
-option to mitmproxy. Using a directory allows certs to be selected based on
-hostname, while using a filename allows a single specific certificate to be used
-for all TLS connections. Certificate files must be in the PEM format and should
-contain both the unencrypted private key and the certificate.
+你可以通过给 mitmproxy 传入 `--set client_certs=DIRECTORY|FILE` 选项来使用客户端证书。
+使用目录时可以按主机名挑选证书，而使用文件名则表示所有 TLS 连接都用同一张指定证书。
+证书文件必须是 PEM 格式，且应同时包含未加密的私钥和证书。
 
-You can specify a directory to `--set client_certs=DIRECTORY`, in which case the matching
-certificate is looked up by filename. So, if you visit example.org, mitmproxy
-looks for a file named `example.org.pem` in the specified directory and uses
-this as the client cert.
+你可以给 `--set client_certs=DIRECTORY` 指定一个目录，此时会按文件名查找匹配的证书。
+也就是说，如果你访问 example.org，mitmproxy 会在指定目录中查找名为 `example.org.pem` 的
+文件，并把它当作客户端证书使用。
 
-### mTLS between client and mitmproxy
+### 客户端与 mitmproxy 之间的 mTLS {#mtls-between-client-and-mitmproxy}
 
-By default, mitmproxy does not send the `CertificateRequest` TLS handshake
-message to connecting clients. This is because it trips up some clients that do
-not expect a certificate request (most famously old Android versions). However,
-there are other clients -- in particular in the MQTT / IoT environment -- that 
-do expect a certificate request and will otherwise fail the TLS handshake.
+默认情况下，mitmproxy 不会向连上来的客户端发送 `CertificateRequest` TLS 握手消息。
+这是因为它会让某些并不预期收到证书请求的客户端出问题（最出名的是旧版 Android）。不过，
+也有一些客户端——尤其是 MQTT / IoT 环境中的客户端——确实预期收到证书请求，否则 TLS 握手就会
+失败。
 
-To instruct mitmproxy to request a client certificate from the connecting
-client, you can pass the `--set request_client_cert=True` option. This will
-generate a `CertificateRequest` TLS handshake message and (if successful)
-establish an mTLS connection. This option only requests a certificate from the
-client, it does not validate the presented identity in any way. For the purposes
-of testing and developing client and server software, this is typically not an
-issue. If you operate mitmproxy in an environment where untrusted clients might
-connect, you need to safeguard against them.
+要让 mitmproxy 向连上来的客户端请求客户端证书，你可以传入 `--set request_client_cert=True`
+选项。这会生成一条 `CertificateRequest` TLS 握手消息，并（在成功时）建立 mTLS 连接。
+这个选项只是向客户端请求证书，并不会以任何方式校验对方出示的身份。对于测试和开发客户端及
+服务器软件的场景，这通常不是问题。如果你在可能有不受信任客户端连入的环境中运行 mitmproxy，
+你需要自行采取防护措施。
 
-The `request_client_cert` option is typically paired with `client_certs` like so:
+`request_client_cert` 选项通常与 `client_certs` 搭配使用，像这样：
 
 ```bash
 mitmproxy --set request_client_cert=True --set client_certs=client-cert.pem

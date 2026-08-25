@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,30 +29,29 @@
     {{ hugo.Generator }}
 </head>
 <body>
-<a href="#main-content" class="visually-hidden-focusable">Skip to main content</a>
+<a href="#main-content" class="visually-hidden-focusable">跳到主要内容</a>
 <header role="banner">
-    <nav role="navigation" aria-label="Main navigation">
+    <nav role="navigation" aria-label="主导航">
         <a href="https://mitmproxy.org/">
-            <img src='{{ (resources.Get "logo-navbar.png").RelPermalink }}' alt="mitmproxy logo" width="123" height="28">
+            <img src='{{ (resources.Get "logo-navbar.png").RelPermalink }}' alt="mitmproxy 徽标" width="123" height="28">
         </a>
-        <a class="hide-mobile" href="https://mitmproxy.org/posts/">Blog</a>
-        <a class="hide-mobile" href="https://docs.mitmproxy.org/">Docs</a>
-        <a class="hide-mobile" href="https://mitmproxy.org/publications/">Publications</a>
+        <a class="hide-mobile" href="https://mitmproxy.org/posts/">博客</a>
+        <a class="hide-mobile" href="https://docs.mitmproxy.org/">文档</a>
+        <a class="hide-mobile" href="https://mitmproxy.org/publications/">出版物</a>
         <span style="flex-grow: 1"></span>
-        <input type="search" id="search" placeholder="Search">
+        <input type="search" id="search" placeholder="搜索">
         <span style="flex-grow: 1"></span>
-        <version-selector version="{{ getenv "DOCS_ARCHIVE" }}" aria-label="Documentation version selector"/>
+        {{/* 版本选择器已移除：它会把路径改写成 /dev 或 /stable，在本站的子路径部署下无效。 */}}
     </nav>
 </header>
-<nav role="navigation" aria-label="Documentation navigation">
+<nav role="navigation" aria-label="文档导航">
     {{ partial "sidebar" . }}
 </nav>
 <main id="main-content" role="main" tabindex="-1">
     {{- block "main" . }}{{- end }}
 </main>
-{{- $versionSelector := resources.Get "version-selector.js" }}
 {{- $search := resources.Get "search.js" }}
-{{- $scripts := slice $versionSelector $search | resources.Concat "bundle.js" | minify | fingerprint }}
+{{- $scripts := slice $search | resources.Concat "bundle.js" | minify | fingerprint }}
 <script src="{{ $scripts.RelPermalink }}"></script>
 </body>
 </html>

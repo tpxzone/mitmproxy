@@ -1,30 +1,28 @@
 ---
-title: "Wireshark and SSL/TLS"
+title: "Wireshark 与 SSL/TLS"
 weight: 1
 aliases:
   - /howto-wireshark-tls/
 ---
 
-# Wireshark and SSL/TLS Master Secrets
+# Wireshark 与 SSL/TLS 主密钥 {#wireshark-and-ssltls-master-secrets}
 
-The SSL/TLS master keys can be logged by mitmproxy so that external programs can
-decrypt SSL/TLS connections both from and to the proxy. Recent versions of
-Wireshark can use these log files to decrypt packets. See the [Wireshark wiki](https://wiki.wireshark.org/TLS#using-the-pre-master-secret) for more information.
+mitmproxy 可以把 SSL/TLS 主密钥记录下来，这样外部程序就能解密进出代理的 SSL/TLS 连接。
+较新版本的 Wireshark 可以用这些日志文件来解密数据包。更多信息请参见
+[Wireshark wiki](https://wiki.wireshark.org/TLS#using-the-pre-master-secret)。
 
-Key logging is enabled by setting the environment variable `SSLKEYLOGFILE` so
-that it points to a writable text file:
+设置环境变量 `SSLKEYLOGFILE` 指向一个可写的文本文件即可启用密钥记录：
 
 ```bash
 SSLKEYLOGFILE="$PWD/.mitmproxy/sslkeylogfile.txt" mitmproxy
 ```
 
-You can also `export` this environment variable to make it persistent for all applications started from your current shell session.
+你也可以 `export` 这个环境变量，让它对当前 shell 会话启动的所有应用都持续生效。
 
-You can specify the key file path in Wireshark via `Edit -> Preferences ->
-Protocols -> TLS -> (Pre)-Master-Secret log filename`. If your SSLKEYLOGFILE
-does not exist yet, just create an empty text file, so you can select it in
-Wireshark (or run mitmproxy to create and collect master secrets).
+在 Wireshark 中，可以通过 `Edit -> Preferences -> Protocols -> TLS ->
+(Pre)-Master-Secret log filename` 指定密钥文件路径。如果你的 SSLKEYLOGFILE 还不存在，
+先建一个空文本文件即可，这样才能在 Wireshark 里选中它（或者先运行 mitmproxy 来创建文件并
+收集主密钥）。
 
-Note that `SSLKEYLOGFILE` is respected by other programs as well, e.g., Firefox
-and Chrome. If this creates any issues, you can use `MITMPROXY_SSLKEYLOGFILE`
-instead without affecting other applications.
+注意，`SSLKEYLOGFILE` 也会被其他程序识别，例如 Firefox 和 Chrome。如果这带来了麻烦，
+你可以改用 `MITMPROXY_SSLKEYLOGFILE`，这样就不会影响其他应用。

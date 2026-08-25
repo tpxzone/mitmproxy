@@ -1,3 +1,3 @@
 ---
-title: "Core Concepts"
---- 
+title: "核心概念"
+---

@@ -1,5 +1,5 @@
 ---
-title: "Examples"
+title: "示例"
 weight: 6
 aliases:
   - /addons-examples/
